@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
 
 func registerCommands() {
 	handler.AddCommand("about", "Show information about the bot", false, 0, aboutCmd)
+	handler.AddCommand("ping", "Check the bot's ping", false, 0, pingCmd)
 }
 
 func aboutCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
@@ -21,4 +23,18 @@ func aboutCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 	}
 
 	s.ChannelMessageSendEmbed(m.ChannelID, embed)
+}
+
+func pingCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
+	ping, _ := s.ChannelMessageSend(m.ChannelID, "Pong...")
+
+	tsOne, _ := ping.Timestamp.Parse()
+	took := time.Now().Sub(tsOne)
+
+	embed := &discordgo.MessageEmbed{
+		Title:       "Pong!",
+		Description: fmt.Sprintf("Ping took `%s`!", took.String()),
+	}
+
+	s.ChannelMessageEditEmbed(m.ChannelID, ping.ID, embed)
 }
