@@ -12,6 +12,9 @@ func registerCommands() {
 	handler.AddCommand("about", "Show information about the bot", false, 0, aboutCmd)
 	handler.AddCommand("ping", "Check the bot's ping", false, 0, pingCmd)
 	handler.AddCommand("version", "Show the versions of things", false, 0, versionCmd)
+
+	// Add the default help command
+	handler.AddDefaultHelpCommand()
 }
 
 func aboutCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
