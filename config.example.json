@@ -1,0 +1,13 @@
+{
+	"token": "",
+	"prefix": "]",
+	"owners": [
+		"152541437068705793"
+	],
+	"statuses": [
+		"Powered by anpan!",
+		"Powered by Golang!",
+		"Rewritten!"
+	],
+	"status_interval": "60s"
+}
