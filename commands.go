@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
@@ -10,6 +11,7 @@ import (
 func registerCommands() {
 	handler.AddCommand("about", "Show information about the bot", false, 0, aboutCmd)
 	handler.AddCommand("ping", "Check the bot's ping", false, 0, pingCmd)
+	handler.AddCommand("version", "Show the versions of things", false, 0, versionCmd)
 }
 
 func aboutCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
@@ -37,4 +39,13 @@ func pingCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 	}
 
 	s.ChannelMessageEditEmbed(m.ChannelID, ping.ID, embed)
+}
+
+func versionCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
+	embed := &discordgo.MessageEmbed{
+		Title:       "007Bot Version(s)",
+		Description: fmt.Sprintf("Golang: %s", runtime.Version()),
+	}
+
+	s.ChannelMessageSendEmbed(m.ChannelID, embed)
 }
