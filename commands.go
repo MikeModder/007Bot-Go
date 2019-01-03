@@ -26,7 +26,7 @@ func aboutCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
 }
 
 func pingCmd(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) {
-	ping, _ := s.ChannelMessageSend(m.ChannelID, "Pong...")
+	ping, _ := s.ChannelMessageSend(m.ChannelID, "Let me check that for you!")
 
 	tsOne, _ := ping.Timestamp.Parse()
 	took := time.Now().Sub(tsOne)
