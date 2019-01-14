@@ -44,6 +44,7 @@ func main() {
 	handler = anpan.NewCommandHandler(botConfig.Prefix, botConfig.Owners, true, true)
 	handler.StatusHandler.SetSwitchInterval(botConfig.StatusInterval)
 	handler.StatusHandler.SetEntries(botConfig.Statuses)
+	handler.SetPrerunFunc(beforeOnMessage)
 	//handler.SetDebug(true)
 
 	registerCommands()
@@ -63,4 +64,31 @@ func main() {
 
 	fmt.Println("> Shutting down...")
 	dg.Close()
+}
+
+func beforeOnMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
+	_, has := AFKUsers[m.Author.ID]
+	if has {
+		delete(AFKUsers, m.Author.ID)
+
+		embed := &discordgo.MessageEmbed{
+			Title:       "Welcome back!",
+			Description: fmt.Sprintf("Welcome back, *%s*! Your AFK status has been removed.", m.Author.String()),
+		}
+
+		s.ChannelMessageSendEmbed(m.ChannelID, embed)
+	}
+
+	for i := 0; i < len(m.Mentions); i++ {
+		mention := m.Mentions[i]
+		afkEntry, has := AFKUsers[mention.ID]
+		if has {
+			embed := &discordgo.MessageEmbed{
+				Title:       fmt.Sprintf("*%s* is AFK!", mention.String()),
+				Description: fmt.Sprintf("*%s* is currently AFK!\n\n```%s```", mention.String(), afkEntry.Message),
+			}
+
+			s.ChannelMessageSendEmbed(m.ChannelID, embed)
+		}
+	}
 }
