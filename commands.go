@@ -34,11 +34,11 @@ func aboutCmd(ctx anpan.Context, _ []string) {
 		},
 	}
 
-	ctx.Session.ChannelMessageSendEmbed(ctx.Message.ChannelID, embed)
+	ctx.ReplyEmbed(embed)
 }
 
 func pingCmd(ctx anpan.Context, _ []string) {
-	ping, _ := ctx.Session.ChannelMessageSend(ctx.Message.ChannelID, "Let me check that for you!")
+	ping, _ := ctx.Reply("Let me check that for you!")
 
 	tsOne, _ := ping.Timestamp.Parse()
 	took := time.Now().Sub(tsOne)
@@ -57,7 +57,7 @@ func versionCmd(ctx anpan.Context, _ []string) {
 		Description: fmt.Sprintf("Golang: %s", runtime.Version()),
 	}
 
-	ctx.Session.ChannelMessageSendEmbed(ctx.Message.ChannelID, embed)
+	ctx.ReplyEmbed(embed)
 }
 
 func afkCmd(ctx anpan.Context, args []string) {
@@ -71,7 +71,7 @@ func afkCmd(ctx anpan.Context, args []string) {
 			Color:       0xff0000,
 		}
 
-		ctx.Session.ChannelMessageSendEmbed(ctx.Channel.ID, embed)
+		ctx.ReplyEmbed(embed)
 		return
 	}
 
@@ -86,6 +86,6 @@ func afkCmd(ctx anpan.Context, args []string) {
 		//Timestamp:   string(time.Now().Unix()),
 	}
 
-	ctx.Session.ChannelMessageSendEmbed(ctx.Channel.ID, embed)
+	ctx.ReplyEmbed(embed)
 	return
 }
