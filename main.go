@@ -41,6 +41,7 @@ func init() {
 }
 
 func main() {
+	fmt.Printf("[007Bot-Go Version %s (%s-%s)]\n", Version, GitCommit, GitBranch)
 	fmt.Println("> Starting up bot...")
 
 	dg, err := discordgo.New("Bot " + botConfig.Token)
