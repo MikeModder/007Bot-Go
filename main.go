@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/MikeModder/anpan"
 	"github.com/bwmarrin/discordgo"
@@ -94,7 +95,7 @@ func beforeOnMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 		if has {
 			embed := &discordgo.MessageEmbed{
 				Title:       fmt.Sprintf("*%s* is AFK!", mention.String()),
-				Description: fmt.Sprintf("*%s* is currently AFK!\n\n```%s```", mention.String(), afkEntry.Message),
+				Description: fmt.Sprintf("*%s* has been afk for `%s`.\n\n```%s```", mention.String(), time.Now().Sub(afkEntry.Set).String(), afkEntry.Message),
 			}
 
 			s.ChannelMessageSendEmbed(m.ChannelID, embed)
