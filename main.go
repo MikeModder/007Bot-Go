@@ -14,6 +14,8 @@ import (
 var (
 	botConfig Config
 	handler   anpan.CommandHandler
+
+	GitCommit, GitBranch, Version string
 )
 
 func init() {
@@ -29,6 +31,12 @@ func init() {
 	if err != nil {
 		fmt.Sprintf("[error] failed to decode config.json: %v\n", err)
 		os.Exit(1)
+	}
+
+	if GitBranch == "" {
+		GitBranch = "unknown"
+		GitCommit = "abcd123"
+		Version = "unknown"
 	}
 }
 

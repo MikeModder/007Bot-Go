@@ -54,7 +54,7 @@ func pingCmd(ctx anpan.Context, _ []string) {
 func versionCmd(ctx anpan.Context, _ []string) {
 	embed := &discordgo.MessageEmbed{
 		Title:       "007Bot Version(s)",
-		Description: fmt.Sprintf("Golang: %s", runtime.Version()),
+		Description: fmt.Sprintf("Golang: %s\nBot version: %s (`%s`)", runtime.Version(), Version, GitCommit),
 	}
 
 	ctx.ReplyEmbed(embed)
