@@ -51,7 +51,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	handler = anpan.NewCommandHandler(botConfig.Prefix, botConfig.Owners, true, true)
+	handler = anpan.NewCommandHandler(botConfig.Prefixes, botConfig.Owners, true, true)
 	handler.StatusHandler.SetSwitchInterval(botConfig.StatusInterval)
 	handler.StatusHandler.SetEntries(botConfig.Statuses)
 	handler.SetPrerunFunc(beforeOnMessage)
@@ -76,7 +76,7 @@ func main() {
 	dg.Close()
 }
 
-func beforeOnMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
+func beforeOnMessage(s *discordgo.Session, m *discordgo.MessageCreate, _ string, _ []string) bool {
 	_, has := AFKUsers[m.Author.ID]
 	if has {
 		delete(AFKUsers, m.Author.ID)
@@ -101,4 +101,5 @@ func beforeOnMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 			s.ChannelMessageSendEmbed(m.ChannelID, embed)
 		}
 	}
+	return false
 }

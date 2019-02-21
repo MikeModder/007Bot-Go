@@ -24,7 +24,7 @@ func registerCommands() {
 	handler.AddDefaultHelpCommand()
 }
 
-func aboutCmd(ctx anpan.Context, _ []string) {
+func aboutCmd(ctx anpan.Context, _ []string) error {
 	embed := &discordgo.MessageEmbed{
 		Title:       "About 007Bot (Golang edition):",
 		Description: "Hello, I am [007Bot Golang Edition](https://github.com/MikeModder/007Bot-Go)! I am a rewrite of the original 007Bot in [Golang](https://golang.org) using the [anpan](https://github.com/MikeModder/anpan) command handler!",
@@ -35,9 +35,10 @@ func aboutCmd(ctx anpan.Context, _ []string) {
 	}
 
 	ctx.ReplyEmbed(embed)
+	return nil
 }
 
-func pingCmd(ctx anpan.Context, _ []string) {
+func pingCmd(ctx anpan.Context, _ []string) error {
 	ping, _ := ctx.Reply("Let me check that for you!")
 
 	tsOne, _ := ping.Timestamp.Parse()
@@ -49,18 +50,20 @@ func pingCmd(ctx anpan.Context, _ []string) {
 	}
 
 	ctx.Session.ChannelMessageEditEmbed(ctx.Message.ChannelID, ping.ID, embed)
+	return nil
 }
 
-func versionCmd(ctx anpan.Context, _ []string) {
+func versionCmd(ctx anpan.Context, _ []string) error {
 	embed := &discordgo.MessageEmbed{
 		Title:       "007Bot Version(s)",
 		Description: fmt.Sprintf("Golang: %s\nBot version: %s (`%s`)", runtime.Version(), Version, GitCommit),
 	}
 
 	ctx.ReplyEmbed(embed)
+	return nil
 }
 
-func afkCmd(ctx anpan.Context, args []string) {
+func afkCmd(ctx anpan.Context, args []string) error {
 	msg := strings.Join(args, " ")
 	if msg == "" {
 		msg = "No message set."
@@ -72,7 +75,7 @@ func afkCmd(ctx anpan.Context, args []string) {
 		}
 
 		ctx.ReplyEmbed(embed)
-		return
+		return nil
 	}
 
 	AFKUsers[ctx.User.ID] = AFKEntry{
@@ -87,5 +90,5 @@ func afkCmd(ctx anpan.Context, args []string) {
 	}
 
 	ctx.ReplyEmbed(embed)
-	return
+	return nil
 }

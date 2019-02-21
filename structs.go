@@ -6,7 +6,7 @@ import (
 
 type Config struct {
 	Token          string   `json:"token"`
-	Prefix         string   `json:"prefix"`
+	Prefixes       []string `json:"prefixes"`
 	Owners         []string `json:"owners"`
 	Statuses       []string `json:"statuses"`
 	StatusInterval string   `json:"status_interval"`
